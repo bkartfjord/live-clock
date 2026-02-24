@@ -2,46 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Clock</title>
-
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    background: black;
-    color: white;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#clock {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18vw;
-    font-weight: bold;
-    text-align: center;
-    white-space: nowrap;
-}
-</style>
+<title>Clock</title>
 </head>
 
-<body>
+<body style="margin:0;background:black;color:white;">
 
-<div id="clock"></div>
+<div id="clock" style="
+position:fixed;
+top:50%;
+left:50%;
+font-size:150px;
+font-family:Arial;
+font-weight:bold;
+transform:translate(-50%,-50%);
+">
+Loading...
+</div>
 
 <script>
 function updateClock() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clock').textContent =
-        hours + ":" + minutes + ":" + seconds;
+  var now = new Date();
+  var h = now.getHours();
+  var m = now.getMinutes();
+  var s = now.getSeconds();
+
+  if (h < 10) h = "0" + h;
+  if (m < 10) m = "0" + m;
+  if (s < 10) s = "0" + s;
+
+  document.getElementById("clock").innerHTML =
+    h + ":" + m + ":" + s;
 }
 
 updateClock();
