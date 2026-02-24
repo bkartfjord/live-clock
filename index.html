@@ -2,32 +2,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clock</title>
 </head>
 
-<body style="margin:0;background:white;color:black;font-family:Arial;">
+<body style="margin:0;background:white;color:black;">
 
-<div style="
+<div id="clock" style="
 position:fixed;
 top:50%;
 left:50%;
+font-size:150px;
+font-family:Arial;
+font-weight:bold;
 transform:translate(-50%,-50%);
-text-align:center;
 ">
-
-<div id="clock" style="font-size:140px;font-weight:bold;">
 Loading...
 </div>
 
-<div id="pressure" style="font-size:40px;margin-top:20px;">
-Fetching ENZV METAR...
-</div>
-
-</div>
-
 <script>
-// CLOCK
 function updateClock() {
   var now = new Date();
   var h = now.getHours();
@@ -41,33 +33,9 @@ function updateClock() {
   document.getElementById("clock").innerHTML =
     h + ":" + m + ":" + s;
 }
+
 updateClock();
 setInterval(updateClock, 1000);
-
-
-// FETCH METAR FROM ENZV
-function fetchMETAR() {
-  fetch("https://aviationweather.gov/api/data/metar?ids=ENZV&format=raw")
-    .then(response => response.text())
-    .then(data => {
-      // Look for QNH (e.g. Q1013)
-      var match = data.match(/Q(\d{4})/);
-      if (match) {
-        document.getElementById("pressure").innerHTML =
-          match[1] + " hPa (ENZV)";
-      } else {
-        document.getElementById("pressure").innerHTML =
-          "Pressure not found";
-      }
-    })
-    .catch(() => {
-      document.getElementById("pressure").innerHTML =
-        "METAR fetch failed";
-    });
-}
-
-fetchMETAR();
-setInterval(fetchMETAR, 600000); // every 10 min
 </script>
 
 </body>
